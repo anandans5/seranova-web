@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://construction-company-foundation.able-cedar-7654.chatgpt.site/sitemap.xml

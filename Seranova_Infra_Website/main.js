@@ -1,0 +1,704 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* =====================================================
+       MOBILE NAVIGATION
+    ===================================================== */
+
+    const menu = document.querySelector('.menu');
+    const links = document.querySelector('.links');
+
+    menu?.addEventListener('click', () => {
+
+        const open = links.classList.toggle('open');
+
+        menu.setAttribute('aria-expanded', open);
+
+    });
+
+
+    /* =====================================================
+       GALLERY FILTERS
+    ===================================================== */
+
+    document.querySelectorAll('.filter').forEach(btn => {
+
+        btn.addEventListener('click', () => {
+
+            document.querySelectorAll('.filter').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            btn.classList.add('active');
+
+
+            document.querySelectorAll('.gallery-item').forEach(item => {
+
+                const filter = btn.dataset.filter;
+                const group = item.dataset.group || '';
+
+                item.style.display =
+                    filter === 'all' || group.includes(filter)
+                        ? 'block'
+                        : 'none';
+
+            });
+
+        });
+
+    });
+
+
+    /* =====================================================
+       GALLERY LIGHTBOX
+    ===================================================== */
+
+    const lightbox = document.querySelector('.lightbox');
+
+    const items = [
+        ...document.querySelectorAll('.gallery-item')
+    ];
+
+    let current = 0;
+
+
+    function show(n) {
+
+        if (!items.length || !lightbox) {
+            return;
+        }
+
+        current =
+            (n + items.length) %
+            items.length;
+
+        const visual =
+            lightbox.querySelector('.visual');
+
+        if (visual) {
+            visual.textContent =
+                items[current].dataset.label;
+        }
+
+        lightbox.classList.add('open');
+
+        lightbox
+            .querySelector('.close')
+            ?.focus();
+
+    }
+
+
+    items.forEach((item, index) => {
+
+        item.addEventListener('click', () => {
+            show(index);
+        });
+
+    });
+
+
+    lightbox
+        ?.querySelector('.close')
+        ?.addEventListener('click', () => {
+
+            lightbox.classList.remove('open');
+
+        });
+
+
+    lightbox
+        ?.querySelector('.prev')
+        ?.addEventListener('click', () => {
+
+            show(current - 1);
+
+        });
+
+
+    lightbox
+        ?.querySelector('.next')
+        ?.addEventListener('click', () => {
+
+            show(current + 1);
+
+        });
+
+
+    lightbox?.addEventListener('click', event => {
+
+        if (event.target === lightbox) {
+
+            lightbox.classList.remove('open');
+
+        }
+
+    });
+
+
+    document.addEventListener('keydown', event => {
+
+        if (!lightbox?.classList.contains('open')) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+
+            lightbox.classList.remove('open');
+
+        }
+
+        if (event.key === 'ArrowLeft') {
+
+            show(current - 1);
+
+        }
+
+        if (event.key === 'ArrowRight') {
+
+            show(current + 1);
+
+        }
+
+    });
+
+
+    /* =====================================================
+       CONTACT FORM
+    ===================================================== */
+
+    const form =
+        document.querySelector('#contact-form');
+
+    form?.addEventListener('submit', event => {
+
+        event.preventDefault();
+
+        const status =
+            document.querySelector('.form-status');
+
+        if (!form.checkValidity()) {
+
+            form.reportValidity();
+
+            return;
+
+        }
+
+        if (status) {
+
+            status.textContent =
+                'Email delivery is not configured yet. Add the secure form endpoint and official email before accepting enquiries.';
+
+            status.style.color =
+                '#8a5b20';
+
+        }
+
+    });
+
+
+    /* =====================================================
+       HOME PAGE
+       INTRO + ANIMATED SHOWCASE + WHAT WE DO
+    ===================================================== */
+
+    const hero =
+        document.querySelector('.hero');
+
+    if (hero) {
+
+        hero.insertAdjacentHTML(
+            'afterend',
+            `
+
+            <!-- ==========================================
+                 INTRO SECTION
+            =========================================== -->
+
+            <section class="intro-panel">
+
+                <div class="wrap">
+
+                    <div class="intro-shell">
+
+
+                        <!-- LEFT CONTENT -->
+                        <div class="intro-copy">
+
+                            <p class="eyebrow">
+                                Our approach
+                            </p>
+
+                            <h2 class="title">
+                                A clear start for every build.
+                            </h2>
+
+                            <p class="lead">
+
+                                Seranova Infra Private Limited
+                                brings together thoughtful planning,
+                                responsible coordination and
+                                transparent communication to help
+                                shape construction requirements
+                                with clarity.
+
+                            </p>
+
+                            <a
+                                class="text-link"
+                                href="about.html"
+                            >
+                                LEARN ABOUT US →
+                            </a>
+
+                        </div>
+
+
+                        <!-- =================================
+                             CODE-BASED ANIMATED SHOWCASE
+                        ================================== -->
+
+                        <div class="intro-visual brand-showcase">
+
+
+                            <div class="showcase-heading">
+
+                                <span class="showcase-line"></span>
+
+                                <p>
+                                    BUILDING WITH QUALITY
+                                </p>
+
+                                <span class="showcase-line"></span>
+
+                            </div>
+
+
+                            <!-- FIRST MOVING ROW -->
+
+                            <div class="brand-marquee">
+
+                                <div class="brand-track">
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ◇
+                                        </span>
+
+                                        <span>
+                                            STRUCTURE
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card gold-card">
+
+                                        <span class="material-icon">
+                                            S
+                                        </span>
+
+                                        <span>
+                                            STEEL
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            C
+                                        </span>
+
+                                        <span>
+                                            CEMENT
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ▦
+                                        </span>
+
+                                        <span>
+                                            TILES
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ⌁
+                                        </span>
+
+                                        <span>
+                                            ELECTRICAL
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ◇
+                                        </span>
+
+                                        <span>
+                                            STRUCTURE
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card gold-card">
+
+                                        <span class="material-icon">
+                                            S
+                                        </span>
+
+                                        <span>
+                                            STEEL
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            C
+                                        </span>
+
+                                        <span>
+                                            CEMENT
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ▦
+                                        </span>
+
+                                        <span>
+                                            TILES
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ⌁
+                                        </span>
+
+                                        <span>
+                                            ELECTRICAL
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- SECOND MOVING ROW -->
+
+                            <div class="brand-marquee reverse">
+
+                                <div class="brand-track">
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ◌
+                                        </span>
+
+                                        <span>
+                                            PLUMBING
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            P
+                                        </span>
+
+                                        <span>
+                                            PAINTS
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card gold-card">
+
+                                        <span class="material-icon">
+                                            ◆
+                                        </span>
+
+                                        <span>
+                                            FINISHES
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            I
+                                        </span>
+
+                                        <span>
+                                            INTERIORS
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            +
+                                        </span>
+
+                                        <span>
+                                            FITTINGS
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            ◌
+                                        </span>
+
+                                        <span>
+                                            PLUMBING
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            P
+                                        </span>
+
+                                        <span>
+                                            PAINTS
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card gold-card">
+
+                                        <span class="material-icon">
+                                            ◆
+                                        </span>
+
+                                        <span>
+                                            FINISHES
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            I
+                                        </span>
+
+                                        <span>
+                                            INTERIORS
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="material-card">
+
+                                        <span class="material-icon">
+                                            +
+                                        </span>
+
+                                        <span>
+                                            FITTINGS
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="showcase-footer">
+
+                                <span>
+                                    DESIGN
+                                </span>
+
+                                <i></i>
+
+                                <span>
+                                    BUILD
+                                </span>
+
+                                <i></i>
+
+                                <span>
+                                    TRUST
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==========================================
+                 WHAT WE DO
+            =========================================== -->
+
+            <section class="what">
+
+                <div class="wrap">
+
+                    <div class="section-head">
+
+                        <p class="eyebrow">
+                            What we do
+                        </p>
+
+                        <h2 class="title">
+                            Construction for the spaces
+                            where you live and work.
+                        </h2>
+
+                    </div>
+
+
+                    <div class="what-grid">
+
+
+                        <!-- Residential -->
+
+                        <article class="what-card">
+
+                            <span class="what-number">
+                                01
+                            </span>
+
+                            <h3>
+                                Residential
+                            </h3>
+
+                            <p>
+                                Construction services for homes,
+                                shaped around your requirements
+                                and project scope.
+                            </p>
+
+                        </article>
+
+
+                        <!-- Commercial -->
+
+                        <article class="what-card">
+
+                            <span class="what-number">
+                                02
+                            </span>
+
+                            <h3>
+                                Commercial
+                            </h3>
+
+                            <p>
+                                Construction for offices,
+                                retail and other commercial
+                                spaces with clear coordination
+                                at each stage.
+                            </p>
+
+                        </article>
+
+
+                        <!-- Renovation -->
+
+                        <article class="what-card">
+
+                            <span class="what-number">
+                                03
+                            </span>
+
+                            <h3>
+                                Renovation &amp; Interiors
+                            </h3>
+
+                            <p>
+                                Renovation and interior
+                                improvement work to refresh
+                                and improve existing spaces.
+                            </p>
+
+                        </article>
+
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <a
+                            class="btn ghost"
+                            href="services.html"
+                        >
+                            VIEW ALL SERVICES
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            `
+        );
+
+    }
+
+});
