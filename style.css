@@ -3106,3 +3106,138 @@ section {
 .gallery-item:hover img {
   transform: scale(1.05);
 }
+
+/* ========================================
+   MATERIAL BRAND MARQUEE
+======================================== */
+
+.brand-section {
+    padding: 90px 0;
+    overflow: hidden;
+    background: #f7f7f7;
+}
+
+.brand-section .section-head {
+    margin-bottom: 45px;
+}
+
+.brand-marquee {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.brand-track {
+    display: flex;
+    width: max-content;
+    gap: 24px;
+    padding: 5px 0;
+    animation: brandScroll 24s linear infinite;
+}
+
+.brand-marquee-reverse .brand-track {
+    animation-direction: reverse;
+}
+
+.brand-marquee:hover .brand-track {
+    animation-play-state: paused;
+}
+
+.brand-card {
+    width: 210px;
+    height: 105px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid rgba(200, 157, 62, 0.28);
+    border-radius: 14px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.brand-card:hover {
+    transform: translateY(-5px);
+    border-color: #c89d3e;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.brand-card img {
+    display: block;
+    width: 100%;
+    height: 60px;
+    object-fit: contain;
+}
+
+@keyframes brandScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(-50% - 12px));
+    }
+}
+
+
+/* Tablet */
+@media (max-width: 900px) {
+
+    .brand-section {
+        padding: 70px 0;
+    }
+
+    .brand-card {
+        width: 180px;
+        height: 95px;
+    }
+
+    .brand-card img {
+        height: 52px;
+    }
+
+}
+
+
+/* Mobile */
+@media (max-width: 650px) {
+
+    .brand-section {
+        padding: 55px 0;
+    }
+
+    .brand-track {
+        gap: 14px;
+        animation-duration: 18s;
+    }
+
+    .brand-card {
+        width: 145px;
+        height: 80px;
+        padding: 14px;
+        border-radius: 10px;
+    }
+
+    .brand-card img {
+        height: 44px;
+    }
+
+}
+
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    .brand-track {
+        animation-play-state: paused;
+    }
+
+}
