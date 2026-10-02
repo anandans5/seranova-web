@@ -3241,3 +3241,127 @@ section {
     }
 
 }
+/* Compact, balanced intro section */
+.intro-panel > .wrap > .intro-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: stretch;
+    height: auto;
+    min-height: 0;
+}
+
+.intro-panel .intro-shell .intro-copy {
+    min-width: 0;
+    padding: 28px;
+}
+
+.intro-panel .intro-copy .title {
+    max-width: 100%;
+    margin: 12px 0 16px;
+    font-size: clamp(26px, 2.2vw, 36px);
+    line-height: 1.2;
+}
+
+.intro-panel .intro-copy .lead {
+    max-width: 100%;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+.intro-panel .intro-copy .text-link {
+    display: inline-block;
+    margin-top: 18px;
+}
+
+/* Fit the moving logos inside the panel */
+.intro-panel .intro-shell .intro-visual.brand-showcase {
+    min-width: 0;
+    min-height: 220px;
+    height: auto;
+    padding: 24px 0;
+    gap: 0;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.intro-panel .brand-showcase .showcase-heading {
+    margin-bottom: 14px;
+    padding: 0 16px;
+    gap: 10px;
+}
+
+.intro-panel .brand-showcase .showcase-heading p {
+    flex-shrink: 1;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.intro-panel .brand-showcase .brand-marquee {
+    width: 100%;
+    margin: 5px 0;
+    overflow: hidden;
+}
+
+.intro-panel .brand-showcase .material-card.brand-card {
+    box-sizing: border-box;
+    flex: 0 0 96px;
+    width: 96px;
+    height: 54px;
+    min-width: 0;
+    min-height: 0;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.intro-panel .brand-showcase .material-card.brand-card img {
+    display: block;
+    width: 76px;
+    height: 34px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.intro-panel .brand-showcase .showcase-footer {
+    margin-top: 14px;
+}
+
+/* Stack neatly on smaller screens */
+@media (max-width: 900px) {
+    .intro-panel > .wrap > .intro-shell {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .intro-panel .intro-shell .intro-copy {
+        padding: 22px;
+    }
+
+    .intro-panel .intro-copy .title {
+        font-size: 28px;
+    }
+
+    .intro-panel .intro-shell .intro-visual.brand-showcase {
+        min-height: 200px;
+        padding: 20px 0;
+    }
+
+    .intro-panel .brand-showcase .material-card.brand-card {
+        flex-basis: 84px;
+        width: 84px;
+        height: 48px;
+        padding: 7px;
+    }
+
+    .intro-panel .brand-showcase .material-card.brand-card img {
+        width: 66px;
+        height: 30px;
+    }
+}
