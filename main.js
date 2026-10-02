@@ -702,3 +702,148 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+/* =====================================================
+   EMAIL ENQUIRY FORMS
+   Works with Home and future Contact forms
+===================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const enquiryForms =
+        document.querySelectorAll('.email-enquiry-form');
+
+    enquiryForms.forEach(form => {
+
+        form.addEventListener('submit', async event => {
+
+            event.preventDefault();
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const recipient =
+                form.dataset.recipient;
+
+            const successMessage =
+                form.dataset.successMessage ||
+                'Thank you! Your request has been submitted successfully. Our team will contact you within 1 hour.';
+
+            const submitButton =
+                form.querySelector('button[type="submit"]');
+
+            const status =
+                form.querySelector('.form-status');
+
+            if (!recipient) {
+                if (status) {
+                    status.textContent =
+                        'The enquiry email is not configured.';
+
+                    status.className =
+                        'quote-status form-status error';
+                }
+
+                return;
+            }
+
+            const originalButtonText =
+                submitButton?.textContent;
+
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'SENDING...';
+            }
+
+            if (status) {
+                status.textContent = '';
+                status.className =
+                    'quote-status form-status';
+            }
+
+            const formData =
+                new FormData(form);
+
+            const submittedData =
+                Object.fromEntries(formData.entries());
+
+            submittedData._subject =
+                form.dataset.subject ||
+                submittedData._subject ||
+                'New Website Enquiry - Seranova Infra';
+
+            submittedData._template =
+                submittedData._template || 'table';
+
+            try {
+
+                const response = await fetch(
+                    `https://formsubmit.co/ajax/${recipient}`,
+                    {
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type':
+                                'application/json',
+
+                            Accept:
+                                'application/json'
+                        },
+
+                        body:
+                            JSON.stringify(submittedData)
+                    }
+                );
+
+                const result =
+                    await response.json();
+
+                if (
+                    !response.ok ||
+                    result.success === false ||
+                    result.success === 'false'
+                ) {
+                    throw new Error(
+                        result.message ||
+                        'Submission failed'
+                    );
+                }
+
+                if (status) {
+                    status.textContent =
+                        successMessage;
+
+                    status.className =
+                        'quote-status form-status success';
+                }
+
+                form.reset();
+
+            } catch (error) {
+
+                if (status) {
+                    status.textContent =
+                        'Unable to submit your request. Please try again or call +91 91088 38899.';
+
+                    status.className =
+                        'quote-status form-status error';
+                }
+
+            } finally {
+
+                if (submitButton) {
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        originalButtonText;
+                }
+
+            }
+
+        });
+
+    });
+
+});

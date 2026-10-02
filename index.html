@@ -170,16 +170,18 @@
                     <aside class="hero-quote-card">
                         <p class="quote-eyebrow">START YOUR PROJECT</p>
                         <h2>Get a Free Quote</h2>
-                        <p class="quote-intro">Share a few details about your construction requirement and connect with our team.</p>
-                        <form class="hero-quote-form" action="contact.html" method="get">
+                        <p class="quote-intro">Share a few details about your construction requirement. Our team will contact you within 1 hour after submission.</p>
+                        <form class="hero-quote-form email-enquiry-form" id="home-quote-form" data-recipient="seranovainfra@gmail.com" data-subject="New Quote Enquiry - Seranova Infra" data-success-message="Thank you! Your request has been submitted successfully. Our team will contact you within 1 hour." autocomplete="on">
+                            <input type="hidden" name="_subject" value="New Quote Enquiry - Seranova Infra">
+                            <input type="hidden" name="_template" value="table">
                             <div class="quote-row">
                                 <div class="quote-field">
                                     <label for="hero-name">YOUR NAME *</label>
-                                    <input id="hero-name" name="name" type="text" placeholder="Enter your name" required>
+                                    <input id="hero-name" name="name" type="text" placeholder="Enter your name" autocomplete="name" required>
                                 </div>
                                 <div class="quote-field">
                                     <label for="hero-phone">MOBILE NUMBER *</label>
-                                    <input id="hero-phone" name="phone" type="tel" placeholder="10-digit mobile" required>
+                                    <input id="hero-phone" name="phone" type="tel" placeholder="10-digit mobile" autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" title="Enter a valid 10-digit Indian mobile number" required>
                                 </div>
                             </div>
                             <div class="quote-field">
@@ -188,15 +190,16 @@
                                     <option value="" selected disabled>Choose your project type</option>
                                     <option value="Residential Construction">Residential Construction</option>
                                     <option value="Commercial Construction">Commercial Construction</option>
-                                    <option value="Architectural Planning">Architectural Planning &amp; Design</option>
-                                    <option value="Interior Design">Interior Design &amp; Execution</option>
-                                    <option value="Renovation">Renovation &amp; Remodeling</option>
+                                    <option value="Architectural Planning and Design">Architectural Planning &amp; Design</option>
+                                    <option value="Interior Design and Execution">Interior Design &amp; Execution</option>
+                                    <option value="Renovation and Remodeling">Renovation &amp; Remodeling</option>
                                 </select>
                             </div>
                             <button class="quote-submit" type="submit">GET FREE CONSULTATION</button>
+                            <p class="quote-status form-status" id="home-quote-status" role="status" aria-live="polite"></p>
                         </form>
                         <div class="quote-notes">
-                            <span>Quality-focused consultation</span>
+                            <span>Response within 1 hour</span>
                             <span>No obligation</span>
                         </div>
                     </aside>
@@ -325,18 +328,15 @@
                     <!-- Contact -->
                     <div>
                         <h4>CONTACT</h4>
-                        <a
-    href="https://mail.google.com/mail/?view=cm&fs=1&to=seranovainfra@gmail.com"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="footer-email"
->
-    seranovainfra@gmail.com
-</a>
-<a href="tel:+919108838899" class="footer-phone">
-    +91 91088 38899
-</a>
-                        <p>[Company Address]</p>
+                        <p>
+                            <a class="footer-email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=seranovainfra@gmail.com" target="_blank" rel="noopener noreferrer">seranovainfra@gmail.com</a>
+                        </p>
+                        <p>
+                            <a class="footer-phone" href="tel:+919108838899">+91 91088 38899</a>
+                        </p>
+                        <p>
+                            <a class="footer-address" href="https://www.google.com/maps/search/?api=1&amp;query=%235%2F3%2C+Guruppa+Layout%2C+Near+Patalamma+Temple%2C+Hancharahalli%2C+Mandur%2C+Bengaluru+Urban%2C+Karnataka+560049" target="_blank" rel="noopener noreferrer">#5/3, Guruppa Layout,<br>Near Patalamma Temple,<br>Hancharahalli, Mandur,<br>Bengaluru Urban, Karnataka – 560049</a>
+                        </p>
                     </div>
                     <!-- Social Media -->
                     <div>
@@ -378,7 +378,7 @@
                     { file: 'kajaria.jpeg', name: 'Kajaria Tiles' },
                     { file: 'asianpaints.png', name: 'Asian Paints' },
                     { file: 'astral.jpeg', name: 'Astral Pipes' },
-                    { file: 'havels.png', name: 'Havels' }
+                    { file: 'havells.png', name: 'Havells' }
                 ]
             ];
 
