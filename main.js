@@ -1,215 +1,148 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    /* =====================================================
+document.addEventListener("DOMContentLoaded", () => {
+  /* =====================================================
        MOBILE NAVIGATION
     ===================================================== */
 
-    const menu = document.querySelector('.menu');
-    const links = document.querySelector('.links');
+  const menu = document.querySelector(".menu");
+  const links = document.querySelector(".links");
 
-    menu?.addEventListener('click', () => {
+  menu?.addEventListener("click", () => {
+    if (!links) return;
+    const open = links.classList.toggle("open");
 
-        const open = links.classList.toggle('open');
+    menu.setAttribute("aria-expanded", open);
+  });
 
-        menu.setAttribute('aria-expanded', open);
-
-    });
-
-
-    /* =====================================================
+  /* =====================================================
        GALLERY FILTERS
     ===================================================== */
 
-    document.querySelectorAll('.filter').forEach(btn => {
+  document.querySelectorAll(".filter").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter").forEach((button) => {
+        button.classList.remove("active");
+      });
 
-        btn.addEventListener('click', () => {
+      btn.classList.add("active");
 
-            document.querySelectorAll('.filter').forEach(button => {
-                button.classList.remove('active');
-            });
+      document.querySelectorAll(".gallery-item").forEach((item) => {
+        const filter = btn.dataset.filter;
+        const group = item.dataset.group || "";
 
-            btn.classList.add('active');
-
-
-            document.querySelectorAll('.gallery-item').forEach(item => {
-
-                const filter = btn.dataset.filter;
-                const group = item.dataset.group || '';
-
-                item.style.display =
-                    filter === 'all' || group.includes(filter)
-                        ? 'block'
-                        : 'none';
-
-            });
-
-        });
-
+        item.style.display =
+          filter === "all" || group.includes(filter) ? "block" : "none";
+      });
     });
+  });
 
-
-    /* =====================================================
+  /* =====================================================
        GALLERY LIGHTBOX
     ===================================================== */
 
-    const lightbox = document.querySelector('.lightbox');
+  const lightbox = document.querySelector(".lightbox");
 
-    const items = [
-        ...document.querySelectorAll('.gallery-item')
-    ];
+  const items = [...document.querySelectorAll(".gallery-item")];
 
-    let current = 0;
+  let current = 0;
 
-
-    function show(n) {
-
-        if (!items.length || !lightbox) {
-            return;
-        }
-
-        current =
-            (n + items.length) %
-            items.length;
-
-        const visual =
-            lightbox.querySelector('.visual');
-
-        if (visual) {
-            visual.textContent =
-                items[current].dataset.label;
-        }
-
-        lightbox.classList.add('open');
-
-        lightbox
-            .querySelector('.close')
-            ?.focus();
-
+  function show(n) {
+    if (!items.length || !lightbox) {
+      return;
     }
 
+    current = (n + items.length) % items.length;
 
-    items.forEach((item, index) => {
+    const visual = lightbox.querySelector(".visual");
 
-        item.addEventListener('click', () => {
-            show(index);
-        });
+    if (visual) {
+      visual.textContent = items[current].dataset.label;
+    }
 
+    lightbox.classList.add("open");
+
+    lightbox.querySelector(".close")?.focus();
+  }
+
+  items.forEach((item, index) => {
+    item.addEventListener("click", () => {
+      show(index);
     });
+  });
 
+  lightbox?.querySelector(".close")?.addEventListener("click", () => {
+    lightbox.classList.remove("open");
+  });
 
-    lightbox
-        ?.querySelector('.close')
-        ?.addEventListener('click', () => {
+  lightbox?.querySelector(".prev")?.addEventListener("click", () => {
+    show(current - 1);
+  });
 
-            lightbox.classList.remove('open');
+  lightbox?.querySelector(".next")?.addEventListener("click", () => {
+    show(current + 1);
+  });
 
-        });
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      lightbox.classList.remove("open");
+    }
+  });
 
+  document.addEventListener("keydown", (event) => {
+    if (!lightbox?.classList.contains("open")) {
+      return;
+    }
 
-    lightbox
-        ?.querySelector('.prev')
-        ?.addEventListener('click', () => {
+    if (event.key === "Escape") {
+      lightbox.classList.remove("open");
+    }
 
-            show(current - 1);
+    if (event.key === "ArrowLeft") {
+      show(current - 1);
+    }
 
-        });
+    if (event.key === "ArrowRight") {
+      show(current + 1);
+    }
+  });
 
-
-    lightbox
-        ?.querySelector('.next')
-        ?.addEventListener('click', () => {
-
-            show(current + 1);
-
-        });
-
-
-    lightbox?.addEventListener('click', event => {
-
-        if (event.target === lightbox) {
-
-            lightbox.classList.remove('open');
-
-        }
-
-    });
-
-
-    document.addEventListener('keydown', event => {
-
-        if (!lightbox?.classList.contains('open')) {
-            return;
-        }
-
-        if (event.key === 'Escape') {
-
-            lightbox.classList.remove('open');
-
-        }
-
-        if (event.key === 'ArrowLeft') {
-
-            show(current - 1);
-
-        }
-
-        if (event.key === 'ArrowRight') {
-
-            show(current + 1);
-
-        }
-
-    });
-
-
-    /* =====================================================
+  /* =====================================================
        CONTACT FORM
     ===================================================== */
 
-    const form =
-        document.querySelector('#contact-form');
+  const form = document.querySelector("#contact-form");
 
-    form?.addEventListener('submit', event => {
+  // Email-enabled contact forms use the shared delivery handler below.
+  if (form && !form.classList.contains("email-enquiry-form"))
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-        event.preventDefault();
+      const status = document.querySelector(".form-status");
 
-        const status =
-            document.querySelector('.form-status');
+      if (!form.checkValidity()) {
+        form.reportValidity();
 
-        if (!form.checkValidity()) {
+        return;
+      }
 
-            form.reportValidity();
+      if (status) {
+        status.textContent =
+          "Email delivery is not configured yet. Add the secure form endpoint and official email before accepting enquiries.";
 
-            return;
-
-        }
-
-        if (status) {
-
-            status.textContent =
-                'Email delivery is not configured yet. Add the secure form endpoint and official email before accepting enquiries.';
-
-            status.style.color =
-                '#8a5b20';
-
-        }
-
+        status.style.color = "#8a5b20";
+      }
     });
 
-
-    /* =====================================================
+  /* =====================================================
        HOME PAGE
        INTRO + ANIMATED SHOWCASE + WHAT WE DO
     ===================================================== */
 
-    const hero =
-        document.querySelector('.hero');
+  const hero = document.querySelector(".hero");
 
-    if (hero) {
-
-        hero.insertAdjacentHTML(
-            'afterend',
-            `
+  if (hero) {
+    hero.insertAdjacentHTML(
+      "afterend",
+      `
 
             <!-- ==========================================
                  INTRO SECTION
@@ -220,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="wrap">
 
                     <div class="intro-shell">
-
 
                         <!-- LEFT CONTENT -->
                         <div class="intro-copy">
@@ -253,13 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         </div>
 
-
                         <!-- =================================
                              CODE-BASED ANIMATED SHOWCASE
                         ================================== -->
 
                         <div class="intro-visual brand-showcase">
-
 
                             <div class="showcase-heading">
 
@@ -273,14 +203,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             </div>
 
-
                             <!-- FIRST MOVING ROW -->
 
                             <div class="brand-marquee">
 
                                 <div class="brand-track">
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -292,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card gold-card">
 
@@ -306,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -318,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card">
 
@@ -332,7 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -344,7 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card">
 
@@ -358,7 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card gold-card">
 
                                         <span class="material-icon">
@@ -370,7 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card">
 
@@ -384,7 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -397,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -409,12 +328,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                 </div>
 
                             </div>
-
 
                             <!-- SECOND MOVING ROW -->
 
@@ -422,7 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                 <div class="brand-track">
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -434,7 +350,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card">
 
@@ -448,7 +363,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card gold-card">
 
                                         <span class="material-icon">
@@ -460,7 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card">
 
@@ -474,7 +387,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -486,7 +398,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card">
 
@@ -500,7 +411,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -512,7 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                     <div class="material-card gold-card">
 
@@ -526,7 +435,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -539,7 +447,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     </div>
 
-
                                     <div class="material-card">
 
                                         <span class="material-icon">
@@ -551,12 +458,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </span>
 
                                     </div>
-
 
                                 </div>
 
                             </div>
-
 
                             <div class="showcase-footer">
 
@@ -578,7 +483,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             </div>
 
-
                         </div>
 
                     </div>
@@ -586,8 +490,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
 
             </section>
-
-
 
             <!-- ==========================================
                  WHAT WE DO
@@ -610,9 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     </div>
 
-
                     <div class="what-grid">
-
 
                         <!-- Residential -->
 
@@ -633,7 +533,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             </p>
 
                         </article>
-
 
                         <!-- Commercial -->
 
@@ -656,7 +555,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         </article>
 
-
                         <!-- Renovation -->
 
                         <article class="what-card">
@@ -677,9 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         </article>
 
-
                     </div>
-
 
                     <div class="actions">
 
@@ -696,11 +592,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             </section>
 
-            `
-        );
-
-    }
-
+            `,
+    );
+  }
 });
 
 /* =====================================================
@@ -708,142 +602,243 @@ document.addEventListener('DOMContentLoaded', () => {
    Works with Home and future Contact forms
 ===================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  const enquiryForms = document.querySelectorAll(".email-enquiry-form");
 
-    const enquiryForms =
-        document.querySelectorAll('.email-enquiry-form');
+  enquiryForms.forEach((form) => {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    enquiryForms.forEach(form => {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
 
-        form.addEventListener('submit', async event => {
+      const recipient = form.dataset.recipient;
 
-            event.preventDefault();
+      const successMessage =
+        form.dataset.successMessage ||
+        "Thank you! Your request has been submitted successfully. Our team will contact you within 1 hour.";
 
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
+      const submitButton = form.querySelector('button[type="submit"]');
 
-            const recipient =
-                form.dataset.recipient;
+      const status = form.querySelector(".form-status");
 
-            const successMessage =
-                form.dataset.successMessage ||
-                'Thank you! Your request has been submitted successfully. Our team will contact you within 1 hour.';
+      if (!recipient) {
+        if (status) {
+          status.textContent = "The enquiry email is not configured.";
 
-            const submitButton =
-                form.querySelector('button[type="submit"]');
+          status.className = "quote-status form-status error";
+        }
 
-            const status =
-                form.querySelector('.form-status');
+        return;
+      }
 
-            if (!recipient) {
-                if (status) {
-                    status.textContent =
-                        'The enquiry email is not configured.';
+      const originalButtonText = submitButton?.textContent;
 
-                    status.className =
-                        'quote-status form-status error';
-                }
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "SENDING...";
+      }
 
-                return;
-            }
+      if (status) {
+        status.textContent = "";
+        status.className = "quote-status form-status";
+      }
 
-            const originalButtonText =
-                submitButton?.textContent;
+      const formData = new FormData(form);
 
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.textContent = 'SENDING...';
-            }
+      const submittedData = Object.fromEntries(formData.entries());
 
-            if (status) {
-                status.textContent = '';
-                status.className =
-                    'quote-status form-status';
-            }
+      submittedData._subject =
+        form.dataset.subject ||
+        submittedData._subject ||
+        "New Website Enquiry - Seranova Infra";
 
-            const formData =
-                new FormData(form);
+      submittedData._template = submittedData._template || "table";
 
-            const submittedData =
-                Object.fromEntries(formData.entries());
+      try {
+        const response = await fetch(
+          `https://formsubmit.co/ajax/${recipient}`,
+          {
+            method: "POST",
 
-            submittedData._subject =
-                form.dataset.subject ||
-                submittedData._subject ||
-                'New Website Enquiry - Seranova Infra';
+            headers: {
+              "Content-Type": "application/json",
 
-            submittedData._template =
-                submittedData._template || 'table';
+              Accept: "application/json",
+            },
 
-            try {
+            body: JSON.stringify(submittedData),
+          },
+        );
 
-                const response = await fetch(
-                    `https://formsubmit.co/ajax/${recipient}`,
-                    {
-                        method: 'POST',
+        const result = await response.json();
 
-                        headers: {
-                            'Content-Type':
-                                'application/json',
+        if (
+          !response.ok ||
+          result.success === false ||
+          result.success === "false"
+        ) {
+          throw new Error(result.message || "Submission failed");
+        }
 
-                            Accept:
-                                'application/json'
-                        },
+        if (status) {
+          status.textContent = successMessage;
 
-                        body:
-                            JSON.stringify(submittedData)
-                    }
-                );
+          status.className = "quote-status form-status success";
+        }
 
-                const result =
-                    await response.json();
+        form.reset();
+      } catch (error) {
+        if (status) {
+          status.textContent =
+            "Unable to submit your request. Please try again or call +91 91088 38899.";
 
-                if (
-                    !response.ok ||
-                    result.success === false ||
-                    result.success === 'false'
-                ) {
-                    throw new Error(
-                        result.message ||
-                        'Submission failed'
-                    );
-                }
+          status.className = "quote-status form-status error";
+        }
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
 
-                if (status) {
-                    status.textContent =
-                        successMessage;
-
-                    status.className =
-                        'quote-status form-status success';
-                }
-
-                form.reset();
-
-            } catch (error) {
-
-                if (status) {
-                    status.textContent =
-                        'Unable to submit your request. Please try again or call +91 91088 38899.';
-
-                    status.className =
-                        'quote-status form-status error';
-                }
-
-            } finally {
-
-                if (submitButton) {
-                    submitButton.disabled = false;
-
-                    submitButton.textContent =
-                        originalButtonText;
-                }
-
-            }
-
-        });
-
+          submitButton.textContent = originalButtonText;
+        }
+      }
     });
+  });
+});
 
+/* HOME PAGE: MATERIAL BRAND LOGOS */
+document.addEventListener("DOMContentLoaded", () => {
+  const showcase = document.querySelector(".intro-panel .brand-showcase");
+  if (!showcase) return;
+
+  const heading = showcase.querySelector(".showcase-heading p");
+  if (heading) heading.textContent = "MATERIAL BRANDS WE SOURCE";
+
+  // Filenames match the existing brands folder exactly.
+  const rows = [
+    [
+      { file: "tata-steel.jpg", name: "Tata Steel" },
+      { file: "jsw-steel.png", name: "JSW Steel" },
+      { file: "ultratech.svg", name: "UltraTech Cement" },
+      { file: "acc.jpeg", name: "ACC Cement" },
+    ],
+    [
+      { file: "kajaria.jpeg", name: "Kajaria Tiles" },
+      { file: "asianpaints.png", name: "Asian Paints" },
+      { file: "astral.jpeg", name: "Astral Pipes" },
+      { file: "havels.png", name: "Havels" },
+    ],
+  ];
+
+  showcase.querySelectorAll(".brand-track").forEach((track, rowIndex) => {
+    const brands = rows[rowIndex];
+    if (!brands) return;
+
+    const group = document.createElement("div");
+    group.className = "brand-group";
+
+    // Two sets fill wide panels. A second equal group closes the loop.
+    for (let repeat = 0; repeat < 2; repeat += 1) {
+      brands.forEach((brand) => {
+        const card = document.createElement("div");
+        card.className = "material-card brand-card";
+        if (repeat > 0) card.setAttribute("aria-hidden", "true");
+
+        const logo = document.createElement("img");
+        logo.src = `brands/${brand.file}`;
+        logo.alt = repeat === 0 ? brand.name : "";
+        logo.width = 66;
+        logo.height = 30;
+        logo.decoding = "async";
+
+        card.append(logo);
+        group.append(card);
+      });
+    }
+
+    const copy = group.cloneNode(true);
+    copy.setAttribute("aria-hidden", "true");
+    copy.querySelectorAll("img").forEach((logo) => {
+      logo.alt = "";
+    });
+    track.replaceChildren(group, copy);
+  });
+});
+
+/* GALLERY PAGE: FILTERS AND IMAGE LIGHTBOX */
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.getElementById("galleryLightbox")) return;
+
+  const filters = document.querySelectorAll(".seranova-gallery-filter");
+  const cards = [...document.querySelectorAll(".seranova-gallery-card")];
+  const lightbox = document.getElementById("galleryLightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const lightboxTitle = document.getElementById("lightboxTitle");
+
+  let currentImage = 0;
+
+  function openLightbox(index) {
+    currentImage = index;
+    const image = cards[currentImage].querySelector("img");
+
+    lightboxImage.src = image.src;
+    lightboxImage.alt = image.alt;
+    lightboxTitle.textContent = cards[currentImage].dataset.title;
+    lightbox.classList.add("open");
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+  }
+
+  filters.forEach((filter) => {
+    filter.addEventListener("click", () => {
+      filters.forEach((button) => button.classList.remove("active"));
+      filter.classList.add("active");
+
+      const selectedCategory = filter.dataset.filter;
+
+      cards.forEach((card) => {
+        const shouldShow =
+          selectedCategory === "all" ||
+          card.dataset.category === selectedCategory;
+
+        card.style.display = shouldShow ? "block" : "none";
+      });
+    });
+  });
+
+  cards.forEach((card, index) => {
+    card.addEventListener("click", () => openLightbox(index));
+  });
+
+  document
+    .getElementById("closeLightbox")
+    .addEventListener("click", closeLightbox);
+
+  document.getElementById("previousImage").addEventListener("click", () => {
+    openLightbox((currentImage - 1 + cards.length) % cards.length);
+  });
+
+  document.getElementById("nextImage").addEventListener("click", () => {
+    openLightbox((currentImage + 1) % cards.length);
+  });
+
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!lightbox.classList.contains("open")) return;
+
+    if (event.key === "Escape") closeLightbox();
+    if (event.key === "ArrowLeft") {
+      openLightbox((currentImage - 1 + cards.length) % cards.length);
+    }
+    if (event.key === "ArrowRight") {
+      openLightbox((currentImage + 1) % cards.length);
+    }
+  });
 });

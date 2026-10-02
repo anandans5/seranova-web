@@ -1,379 +1,237 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gallery | Seranova Infra Private Limited</title>
+    <meta
+      name="description"
+      content="Construction, architecture and site-progress gallery of Seranova Infra Private Limited."
+    />
 
-  <title>Gallery | Seranova Infra Private Limited</title>
-  <meta name="description" content="Construction, architecture and site-progress gallery of Seranova Infra Private Limited.">
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg?v=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-  <link rel="icon" type="image/jpeg" href="favicon.jpeg?v=1">
-  <link rel="stylesheet" href="style.css">
+  <body>
+    <header class="header">
+      <nav class="nav wrap" aria-label="Main navigation">
+        <a class="brand" href="index.html">
+          <img
+            src="favicon.jpeg"
+            alt="Seranova Infra Private Limited Logo"
+            class="brand-logo"
+          />
+          <span>Seranova Infra Private Limited</span>
+        </a>
 
-  <style>
-    .seranova-gallery-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-
-    .seranova-gallery-filter {
-      padding: 10px 15px;
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      background: #fff;
-      color: var(--black);
-      font: 600 0.7rem Manrope, sans-serif;
-      cursor: pointer;
-    }
-
-    .seranova-gallery-filter:hover,
-    .seranova-gallery-filter.active {
-      background: var(--black);
-      border-color: var(--black);
-      color: var(--gold-light);
-    }
-
-    .seranova-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .seranova-gallery-card {
-      padding: 0;
-      overflow: hidden;
-      border: 0;
-      border-radius: 8px;
-      background: #111;
-      cursor: pointer;
-    }
-
-    .seranova-gallery-card img {
-      display: block;
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.35s ease;
-    }
-
-    .seranova-gallery-card:hover img {
-      transform: scale(1.06);
-    }
-
-    .seranova-lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      display: none;
-      place-items: center;
-      padding: 24px;
-      background: rgba(0, 0, 0, 0.94);
-    }
-
-    .seranova-lightbox.open {
-      display: grid;
-    }
-
-    .seranova-lightbox figure {
-      width: min(900px, 95vw);
-      margin: 0;
-      text-align: center;
-    }
-
-    .seranova-lightbox img {
-      display: block;
-      width: 100%;
-      max-height: 75vh;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-
-    .seranova-lightbox figcaption {
-      margin: 12px 0;
-      color: #fff;
-      font: 600 0.85rem Manrope, sans-serif;
-    }
-
-    .seranova-lightbox-actions {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .seranova-lightbox-actions button {
-      padding: 10px 14px;
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      background: transparent;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    @media (max-width: 800px) {
-      .seranova-gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 520px) {
-      .seranova-gallery-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .seranova-gallery-card img {
-        height: 230px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header class="header">
-    <nav class="nav wrap" aria-label="Main navigation">
-
-      <a class="brand" href="index.html">
-        <img
-          src="favicon.jpeg"
-          alt="Seranova Infra Private Limited Logo"
-          class="brand-logo"
+        <button
+          class="menu"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
         >
-        <span>Seranova Infra Private Limited</span>
-      </a>
+          ☰
+        </button>
 
-      <button class="menu" aria-label="Toggle navigation" aria-expanded="false">
-        ☰
-      </button>
+        <div class="links">
+          <a href="index.html">HOME</a>
+          <a href="about.html">ABOUT US</a>
+          <a href="services.html">SERVICES</a>
+          <a href="projects.html">PROJECTS</a>
+          <a href="directors.html">DIRECTORS</a>
+          <a href="gallery.html" aria-current="page">GALLERY</a>
+          <a href="contact.html">CONTACT US</a>
+          <a class="btn" href="contact.html">GET A QUOTE</a>
+        </div>
 
-      <div class="links">
-        <a href="index.html">HOME</a>
-        <a href="about.html">ABOUT US</a>
-        <a href="services.html">SERVICES</a>
-        <a href="projects.html">PROJECTS</a>
-        <a href="directors.html">DIRECTORS</a>
-        <a href="gallery.html" aria-current="page">GALLERY</a>
-        <a href="contact.html">CONTACT US</a>
         <a class="btn" href="contact.html">GET A QUOTE</a>
-      </div>
+      </nav>
+    </header>
 
-      <a class="btn" href="contact.html">GET A QUOTE</a>
-    </nav>
-  </header>
-
-  <main>
-
-    <section class="page-hero">
-      <div class="wrap">
-        <p class="eyebrow">Our work</p>
-        <h1 class="title">Gallery</h1>
-        <p>
-          Explore our construction work, architectural designs and ongoing project progress.
-        </p>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-
-        <div class="seranova-gallery-tabs" aria-label="Gallery filters">
-          <button class="seranova-gallery-filter active" data-filter="all">ALL</button>
-          <button class="seranova-gallery-filter" data-filter="construction">CONSTRUCTION</button>
-          <button class="seranova-gallery-filter" data-filter="architecture">ARCHITECTURE</button>
-          <button class="seranova-gallery-filter" data-filter="progress">SITE PROGRESS</button>
+    <main>
+      <section class="page-hero">
+        <div class="wrap">
+          <p class="eyebrow">Our work</p>
+          <h1 class="title">Gallery</h1>
+          <p>
+            Explore our construction work, architectural designs and ongoing
+            project progress.
+          </p>
         </div>
+      </section>
 
-        <div class="seranova-gallery-grid">
+      <section>
+        <div class="wrap">
+          <div class="seranova-gallery-tabs" aria-label="Gallery filters">
+            <button class="seranova-gallery-filter active" data-filter="all">
+              ALL
+            </button>
+            <button class="seranova-gallery-filter" data-filter="construction">
+              CONSTRUCTION
+            </button>
+            <button class="seranova-gallery-filter" data-filter="architecture">
+              ARCHITECTURE
+            </button>
+            <button class="seranova-gallery-filter" data-filter="progress">
+              SITE PROGRESS
+            </button>
+          </div>
 
-          <button class="seranova-gallery-card" data-category="construction" data-title="Construction Work">
-            <img src="gallery/construction.jpg" alt="Construction work">
-          </button>
+          <div class="seranova-gallery-grid">
+            <button
+              class="seranova-gallery-card"
+              data-category="construction"
+              data-title="Construction Work"
+            >
+              <img src="gallery/construction.jpg" alt="Construction work" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="construction" data-title="Construction Work">
-            <img src="gallery/construction1.jpg" alt="Construction work">
-          </button>
+            <button
+              class="seranova-gallery-card"
+              data-category="construction"
+              data-title="Construction Work"
+            >
+              <img src="gallery/construction1.jpg" alt="Construction work" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="construction" data-title="Construction Work">
-            <img src="gallery/construction2.jpg" alt="Construction work">
-          </button>
+            <button
+              class="seranova-gallery-card"
+              data-category="construction"
+              data-title="Construction Work"
+            >
+              <img src="gallery/construction2.jpg" alt="Construction work" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="construction" data-title="Construction Work">
-            <img src="gallery/construction4.jpg" alt="Construction work">
-          </button>
+            <button
+              class="seranova-gallery-card"
+              data-category="construction"
+              data-title="Construction Work"
+            >
+              <img src="gallery/construction4.jpg" alt="Construction work" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="construction" data-title="Construction Work">
-            <img src="gallery/construction5.jpg" alt="Construction work">
-          </button>
+            <button
+              class="seranova-gallery-card"
+              data-category="construction"
+              data-title="Construction Work"
+            >
+              <img src="gallery/construction5.jpg" alt="Construction work" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="architecture" data-title="Architectural Design">
-            <img src="gallery/design.jpg" alt="Architectural design plan">
-          </button>
+            <button
+              class="seranova-gallery-card"
+              data-category="architecture"
+              data-title="Architectural Design"
+            >
+              <img src="gallery/design.jpg" alt="Architectural design plan" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="progress" data-title="Project in Progress">
-            <img src="gallery/progress.jpg" alt="Project in progress">
-          </button>
+            <button
+              class="seranova-gallery-card"
+              data-category="progress"
+              data-title="Project in Progress"
+            >
+              <img src="gallery/progress.jpg" alt="Project in progress" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="progress" data-title="Project in Progress">
-            <img src="gallery/progress2.jpg" alt="Project in progress">
-          </button>
+            <button
+              class="seranova-gallery-card"
+              data-category="progress"
+              data-title="Project in Progress"
+            >
+              <img src="gallery/progress2.jpg" alt="Project in progress" />
+            </button>
 
-          <button class="seranova-gallery-card" data-category="progress" data-title="Project in Progress">
-            <img src="gallery/progress3.jpg" alt="Project in progress">
-          </button>
-
+            <button
+              class="seranova-gallery-card"
+              data-category="progress"
+              data-title="Project in Progress"
+            >
+              <img src="gallery/progress3.jpg" alt="Project in progress" />
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-  </main>
+    <div
+      class="seranova-lightbox"
+      id="galleryLightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Gallery image viewer"
+    >
+      <figure>
+        <img id="lightboxImage" src="" alt="" />
+        <figcaption id="lightboxTitle"></figcaption>
 
-  <div class="seranova-lightbox" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Gallery image viewer">
-    <figure>
-      <img id="lightboxImage" src="" alt="">
-      <figcaption id="lightboxTitle"></figcaption>
-
-      <div class="seranova-lightbox-actions">
-        <button type="button" id="previousImage">Previous</button>
-        <button type="button" id="closeLightbox">Close</button>
-        <button type="button" id="nextImage">Next</button>
-      </div>
-    </figure>
-  </div>
-
-  <footer class="footer">
-    <div class="wrap">
-      <div class="foot-grid">
-
-        <div>
-          <a class="brand" href="index.html">
-            <i class="mark"></i>
-            Seranova Infra Private Limited
-          </a>
-          <p>Building Quality. Creating Value.</p>
+        <div class="seranova-lightbox-actions">
+          <button type="button" id="previousImage">Previous</button>
+          <button type="button" id="closeLightbox">Close</button>
+          <button type="button" id="nextImage">Next</button>
         </div>
-
-        <div>
-          <h4>QUICK LINKS</h4>
-          <a href="index.html">Home</a>
-          <a href="about.html">About Us</a>
-          <a href="services.html">Services</a>
-          <a href="projects.html">Projects</a>
-          <a href="directors.html">Directors</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="contact.html">Contact Us</a>
-        </div>
-
-        <div>
-          <h4>CONTACT</h4>
-<a
-    href="https://mail.google.com/mail/?view=cm&fs=1&to=seranovainfra@gmail.com"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="footer-email"
->
-    seranovainfra@gmail.com
-</a>
-<a href="tel:+919108838899" class="footer-phone">
-    +91 91088 38899
-</a>
-          <p>[Company Address]</p>
-        </div>
-
-        <div>
-          <h4>SOCIAL MEDIA</h4>
-          <p>Instagram [to be added]</p>
-          <p>Facebook [to be added]</p>
-          <p>LinkedIn [to be added]</p>
-        </div>
-
-        <div>
-          <h4>LEGAL</h4>
-<a href="/terms-and-conditions">Terms and Conditions</a>
-<a href="/privacy-policy">Privacy Policy</a>
-        </div>
-
-      </div>
-
-      <div class="copyright">
-        © 2026 Seranova Infra Private Limited. All Rights Reserved.
-      </div>
+      </figure>
     </div>
-  </footer>
 
-  <script src="main.js"></script>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="foot-grid">
+          <div>
+            <a class="brand" href="index.html">
+              <i class="mark"></i>
+              Seranova Infra Private Limited
+            </a>
+            <p>Building Quality. Creating Value.</p>
+          </div>
 
-  <script>
-    const filters = document.querySelectorAll('.seranova-gallery-filter');
-    const cards = [...document.querySelectorAll('.seranova-gallery-card')];
-    const lightbox = document.getElementById('galleryLightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxTitle = document.getElementById('lightboxTitle');
+          <div>
+            <h4>QUICK LINKS</h4>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="services.html">Services</a>
+            <a href="projects.html">Projects</a>
+            <a href="directors.html">Directors</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
 
-    let currentImage = 0;
+          <div>
+            <h4>CONTACT</h4>
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=seranovainfra@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer-email"
+            >
+              seranovainfra@gmail.com
+            </a>
+            <a href="tel:+919108838899" class="footer-phone">
+              +91 91088 38899
+            </a>
+            <p>[Company Address]</p>
+          </div>
 
-    function openLightbox(index) {
-      currentImage = index;
-      const image = cards[currentImage].querySelector('img');
+          <div>
+            <h4>SOCIAL MEDIA</h4>
+            <p>Instagram [to be added]</p>
+            <p>Facebook [to be added]</p>
+            <p>LinkedIn [to be added]</p>
+          </div>
 
-      lightboxImage.src = image.src;
-      lightboxImage.alt = image.alt;
-      lightboxTitle.textContent = cards[currentImage].dataset.title;
-      lightbox.classList.add('open');
-    }
+          <div>
+            <h4>LEGAL</h4>
+            <a href="/terms-and-conditions">Terms and Conditions</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+          </div>
+        </div>
 
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-    }
+        <div class="copyright">
+          © 2026 Seranova Infra Private Limited. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
 
-    filters.forEach(filter => {
-      filter.addEventListener('click', () => {
-        filters.forEach(button => button.classList.remove('active'));
-        filter.classList.add('active');
-
-        const selectedCategory = filter.dataset.filter;
-
-        cards.forEach(card => {
-          const shouldShow =
-            selectedCategory === 'all' ||
-            card.dataset.category === selectedCategory;
-
-          card.style.display = shouldShow ? 'block' : 'none';
-        });
-      });
-    });
-
-    cards.forEach((card, index) => {
-      card.addEventListener('click', () => openLightbox(index));
-    });
-
-    document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
-
-    document.getElementById('previousImage').addEventListener('click', () => {
-      openLightbox((currentImage - 1 + cards.length) % cards.length);
-    });
-
-    document.getElementById('nextImage').addEventListener('click', () => {
-      openLightbox((currentImage + 1) % cards.length);
-    });
-
-    lightbox.addEventListener('click', event => {
-      if (event.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener('keydown', event => {
-      if (!lightbox.classList.contains('open')) return;
-
-      if (event.key === 'Escape') closeLightbox();
-      if (event.key === 'ArrowLeft') {
-        openLightbox((currentImage - 1 + cards.length) % cards.length);
-      }
-      if (event.key === 'ArrowRight') {
-        openLightbox((currentImage + 1) % cards.length);
-      }
-    });
-  </script>
-
-</body>
+    <script src="main.js"></script>
+  </body>
 </html>
