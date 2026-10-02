@@ -7,6 +7,125 @@
         <meta name="description" content="A quality-focused, construction company.">
         <link rel="icon" type="image/jpeg" href="favicon.jpeg?v=1">
         <link rel="stylesheet" href="style.css">
+        <style>
+        /* A more compact intro panel, using the existing layout. */
+        .intro-panel .intro-shell {
+            height: auto;
+            min-height: 0;
+        }
+
+        .intro-panel .intro-copy {
+            padding: 30px;
+        }
+
+        .intro-panel .intro-visual.brand-showcase {
+            height: auto;
+            min-height: 240px;
+            padding: 24px 0;
+            gap: 0;
+        }
+
+        .brand-showcase .showcase-heading {
+            margin-bottom: 16px;
+        }
+
+        .brand-showcase .showcase-footer {
+            margin-top: 16px;
+        }
+
+        .brand-showcase .brand-marquee {
+            margin: 5px 0;
+        }
+
+        /* Smaller logo cards, retaining the existing scrolling animations. */
+        .brand-showcase .material-card.brand-card {
+            box-sizing: border-box;
+            width: 96px;
+            min-width: 0;
+            height: 54px;
+            min-height: 0;
+            flex: 0 0 96px;
+            background: #ffffff;
+            padding: 8px;
+            color: #111111;
+        }
+
+        .brand-showcase .material-card.brand-card img {
+            display: block;
+            width: 66px;
+            max-width: 100%;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .brand-showcase .material-card.brand-card:hover {
+            background: #ffffff;
+            color: #111111;
+        }
+
+        /* Equal groups include the trailing gap for a seamless loop. */
+        .brand-showcase .brand-track {
+            gap: 0;
+        }
+
+        .brand-showcase .brand-group {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 12px;
+            padding-right: 12px;
+        }
+
+        .brand-showcase .showcase-heading p {
+            flex-shrink: 1;
+            text-align: center;
+        }
+
+        @media (max-width: 650px) {
+            .intro-panel .intro-copy {
+                padding: 24px;
+            }
+
+            .intro-panel .intro-visual.brand-showcase {
+                min-height: 210px;
+                padding: 20px 0;
+            }
+
+            .brand-showcase .material-card.brand-card {
+                width: 84px;
+                height: 48px;
+                flex-basis: 84px;
+                padding: 7px;
+            }
+
+            .brand-showcase .material-card.brand-card img {
+                width: 60px;
+                height: 28px;
+            }
+
+            .brand-showcase .brand-group {
+                gap: 10px;
+                padding-right: 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .brand-showcase .brand-track {
+                animation: none;
+                transform: none;
+            }
+
+            .brand-showcase .brand-marquee {
+                overflow-x: auto;
+                mask-image: none;
+                -webkit-mask-image: none;
+            }
+
+            .brand-showcase .brand-group[aria-hidden="true"] {
+                display: none;
+            }
+        }
+    </style>
     </head>
     <body>
         <!-- Header -->
