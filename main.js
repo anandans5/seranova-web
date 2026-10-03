@@ -726,7 +726,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
     [
       { file: "kajaria.jpeg", name: "Kajaria Tiles" },
-      { file: "asianpaints.png", name: "Asian Paints" },
+      { file: "asianpaints.jpeg", name: "Asian Paints" },
       { file: "astral.jpeg", name: "Astral Pipes" },
       { file: "havels.png", name: "Havels" },
     ],
