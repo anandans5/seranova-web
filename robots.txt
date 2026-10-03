@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://construction-company-foundation.able-cedar-7654.chatgpt.site/sitemap.xml
+Sitemap: https://seranova-web-phi.vercel.app/sitemap.xml

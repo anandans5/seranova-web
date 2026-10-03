@@ -1590,6 +1590,21 @@ section {
   cursor: pointer;
 }
 
+/* Contact-form feedback on the light form background. */
+#contact-form .form-status.success {
+  color: #176236;
+}
+
+#contact-form .form-status.error {
+  color: #9b2020;
+}
+
+/* Keep long contact details within narrow footer columns. */
+.footer-email,
+.footer-address {
+  overflow-wrap: anywhere;
+}
+
 /* =========================================================
    2. TABLET / MOBILE LAYOUT
 ========================================================= */
